@@ -8,9 +8,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+
 
 import com.example.android_tp4_listview_firebase.models.Student;
 
@@ -20,9 +19,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     ListView l;
     AutoCompleteTextView search;
-    TextView fisrtName;
-    TextView lastName;
 
+    CustomAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
         search.setAdapter(new ArrayAdapter<String>(this,android.R.layout.select_dialog_item,getNames(getStudents())));
         search.setThreshold(1);
 
-        fisrtName = findViewById(R.id.name);
-        lastName = findViewById(R.id.lname);
+
 
         search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -45,11 +42,10 @@ public class MainActivity extends AppCompatActivity {
 
                     Student s = getStudents().get(index);
                     Float[] data = getNotes(s);
-                    fisrtName.setText(s.firstName);
-                    lastName.setText(s.lastName);
 
-                    ArrayAdapter<Float> arr = new ArrayAdapter<Float>(MainActivity.this, R.layout.custom_adapter,data);
-                    l.setAdapter(arr);
+
+                    adapter = new CustomAdapter(MainActivity.this, data);
+                    l.setAdapter(adapter);
 
 
 

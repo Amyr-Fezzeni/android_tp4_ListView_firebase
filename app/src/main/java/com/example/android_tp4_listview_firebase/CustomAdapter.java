@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class CustomAdapter extends ArrayAdapter {
+
+public class CustomAdapter extends ArrayAdapter{
 
     Activity context;
     Float[] notes;
@@ -18,32 +20,74 @@ public class CustomAdapter extends ArrayAdapter {
         this.context = cntx;
         this.notes = notes;
     }
+
+
+
     @Override
-    public View getView(int index, View view, ViewGroup parent){
-        LayoutInflater inflater = context.getLayoutInflater();
-
-        View row = inflater.inflate(R.layout.custom_adapter, null);
-
-        ImageView img = row.findViewById(R.id.img);
-        TextView note = row.findViewById(R.id.note);
+    public View getView(int position, View convertView, ViewGroup parent){
 
 
-        Float _note =  notes[index];
+
+        final View result;
+
+
+
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+
+            convertView =  inflater.inflate(R.layout.custom_adapter, parent, false);
+
+        TextView note = (TextView) convertView.findViewById(R.id.note);
+        ImageView image = (ImageView) convertView.findViewById(R.id.img);
+
+
+        result = convertView;
+
+
+
+        Float _note =  notes[position];
         String n = _note.toString();
         note.setText(n);
 
         if(_note >= 10){
-            img.setImageResource(R.drawable.coffee);
+            image.setImageResource(R.drawable.coffee);
         }
         else{
-            img.setImageResource(R.drawable.work);
+            image.setImageResource(R.drawable.work);
         }
-
-        return row;
+        result.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, getMessage(position, _note), Toast.LENGTH_LONG).show();
+            }
+        });
+        return result;
     }
 
 
+String getMessage(int index, float note){
+        String result = "";
 
+    switch (index){
+        case 0:
+            result += "Python :";break;
+        case 1:
+            result += "Java :";break;
+        case 2:
+            result += "Flutter :";break;
+        case 3:
+            result += "Database :";break;
+        case 4:
+            result += "Angular :";break;
+        default:
+            break;
+    }
+    if (note >=10){
+        result += " Success";
+    }else{
+        result += " Failed";
+    }
+        return result;
+}
 
 
 }
