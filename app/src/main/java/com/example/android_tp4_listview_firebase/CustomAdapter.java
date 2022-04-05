@@ -49,10 +49,10 @@ public class CustomAdapter extends ArrayAdapter{
         note.setText(n);
 
         if(_note >= 10){
-            image.setImageResource(R.drawable.coffee);
+            image.setImageResource(R.drawable.happy);
         }
         else{
-            image.setImageResource(R.drawable.work);
+            image.setImageResource(R.drawable.sad);
         }
         result.setOnClickListener(new View.OnClickListener() {
             @Override
