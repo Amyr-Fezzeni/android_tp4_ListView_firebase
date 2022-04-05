@@ -1,6 +1,7 @@
 package com.example.android_tp4_listview_firebase.models;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Student {
@@ -23,15 +24,15 @@ public class Student {
         this.python = python;
         this.java = java;
     }
-    public Student(HashMap<String, String> data){
-        this.firstName = data.get("firstName");
-        this.lastName = data.get("lastName");
-        this.database = Float.parseFloat(Objects.requireNonNull(data.get("database")));
-        this.angular = Float.parseFloat(Objects.requireNonNull(data.get("angular")));
-        this.android = Float.parseFloat(Objects.requireNonNull(data.get("android")));
-        this.flutter =Float.parseFloat(Objects.requireNonNull(data.get("flutter")));
-        this.python =Float.parseFloat(Objects.requireNonNull(data.get("python")));
-        this.java = Float.parseFloat(Objects.requireNonNull(data.get("java")));
+    public Student(Map<String, Object> data){
+        this.firstName = (String) data.get("firstName");
+        this.lastName = (String) data.get("lastName");
+        this.database = Float.parseFloat(String.valueOf(data.get("database")));
+        this.angular = Float.parseFloat(String.valueOf(data.get("angular")));
+        this.android = Float.parseFloat(String.valueOf(data.get("android")));
+        this.flutter =Float.parseFloat(String.valueOf(data.get("flutter")));
+        this.python =Float.parseFloat(String.valueOf(data.get("python")));
+        this.java = Float.parseFloat(String.valueOf(data.get("java")));
     }
     public HashMap<String, Object> toJson(){
         HashMap<String, Object> data = new HashMap<>();

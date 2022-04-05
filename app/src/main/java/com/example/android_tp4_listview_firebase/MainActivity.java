@@ -1,36 +1,56 @@
 package com.example.android_tp4_listview_firebase;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
-
-
 import com.example.android_tp4_listview_firebase.models.Student;
+import com.example.android_tp4_listview_firebase.services.DatabaseService;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+
 
 
 public class MainActivity extends AppCompatActivity {
     ListView l;
     AutoCompleteTextView search;
-
+    ArrayList<Student> students;
     CustomAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        DatabaseService.getData();
         l = findViewById(R.id.listnotes);
 
         search = findViewById(R.id.searchBar);
-        search.setAdapter(new ArrayAdapter<String>(this,android.R.layout.select_dialog_item,getNames(getStudents())));
-        search.setThreshold(1);
+        students = new ArrayList<>();
+
+        DatabaseService.db.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                students.add(new Student(document.getData()));
+                            }
+                            search.setAdapter(new ArrayAdapter<String>(MainActivity.this,android.R.layout.select_dialog_item,getNames(DatabaseService.getStudents())));
+                            search.setThreshold(1);
+                        } else {
+                            System.out.println("Error getting documents."+ task.getException());
+                        }
+                    }
+                });
 
 
 
@@ -38,18 +58,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long arg) {
                 String name = adapterView.getItemAtPosition(i).toString();
-                int index = getIndex(name, getStudents());
 
-                    Student s = getStudents().get(index);
+                System.out.println(students.size());
+                int index = getIndex(name, students);
+                    Student s = students.get(index);
                     Float[] data = getNotes(s);
-
-
                     adapter = new CustomAdapter(MainActivity.this, data);
                     l.setAdapter(adapter);
-
-
-
-
             }
         });
 
@@ -58,31 +73,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
-    ArrayList<Student> getStudents(){
-        ArrayList<Student> students = new ArrayList<>();
-        students.add(new Student("Amyr","Fezzeni",10,12,9,18,19,15));
-
-        students.add(new Student("name 2","lname 2",5,10,19,8,7,11));
-
-        students.add(new Student("name 3","lname 3",10,12,9,18,19,15));
-
-        students.add(new Student("name 4","lname 4",10,12,9,18,19,15));
-        return students;
-    }
-
     Float [] getNotes(Student s){
-        Float notes [] = {s.python, s.java, s.flutter,s.angular,s.database};
-        return notes;
+        return new Float[] {s.python, s.java, s.flutter,s.angular,s.database};
     }
     ArrayList<String> getNames(ArrayList<Student> students){
         ArrayList<String> names  = new ArrayList<String>();
         for (Student s : students){
             names.add(s.firstName+" "+s.lastName);
         }
-
+        System.out.println(names);
         return names;
     }
     int getIndex(String name,ArrayList<Student> students ){
@@ -95,4 +94,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return -1;
     }
+
 }
