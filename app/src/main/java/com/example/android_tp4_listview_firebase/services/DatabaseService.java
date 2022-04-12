@@ -17,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class DatabaseService {
     static public FirebaseFirestore db = FirebaseFirestore.getInstance();
-    static ArrayList<Student> students = new ArrayList<>();
+    static public ArrayList<Student> students = new ArrayList<>();
     static public void setData(Student s) {
 
         db.collection("users")

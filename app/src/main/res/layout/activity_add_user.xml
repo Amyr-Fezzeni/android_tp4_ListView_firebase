@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddUser">
+
+    <EditText
+        android:id="@+id/firstname"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="189dp"
+        android:layout_marginEnd="41dp"
+        android:ems="10"
+        android:hint="First Name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/lastname"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/lastname"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="189dp"
+        android:layout_marginEnd="62dp"
+        android:ems="10"
+        android:hint="Last Name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/firstname"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/pythontx"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="62dp"
+        android:ems="10"
+        android:hint="Python"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/javatx"
+        app:layout_constraintTop_toBottomOf="@+id/fluttertx" />
+
+    <EditText
+        android:id="@+id/androidtx"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="116dp"
+        android:layout_marginEnd="41dp"
+        android:ems="10"
+        android:hint="Android"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/fluttertx"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstname" />
+
+    <EditText
+        android:id="@+id/fluttertx"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="116dp"
+        android:layout_marginEnd="62dp"
+        android:ems="10"
+        android:hint="Flutter"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/androidtx"
+        app:layout_constraintTop_toBottomOf="@+id/lastname" />
+
+    <EditText
+        android:id="@+id/angulartx"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="41dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="80dp"
+        android:ems="10"
+        android:hint="Angular"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/validerbtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/databasetx"
+        app:layout_constraintTop_toBottomOf="@+id/pythontx" />
+
+    <EditText
+        android:id="@+id/javatx"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="41dp"
+        android:ems="10"
+        android:hint="Java"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/pythontx"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/androidtx" />
+
+    <Button
+        android:id="@+id/validerbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="158dp"
+        android:layout_marginEnd="159dp"
+        android:layout_marginBottom="57dp"
+        android:text="Valider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/databasetx"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="41dp"
+        android:layout_marginEnd="41dp"
+        android:ems="10"
+        android:hint="Database"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/angulartx"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/javatx" />
+</androidx.constraintlayout.widget.ConstraintLayout>

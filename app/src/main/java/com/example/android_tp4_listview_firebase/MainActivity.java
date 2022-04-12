@@ -1,12 +1,16 @@
 package com.example.android_tp4_listview_firebase;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ListView;
 import com.example.android_tp4_listview_firebase.models.Student;
 import com.example.android_tp4_listview_firebase.services.DatabaseService;
@@ -25,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     AutoCompleteTextView search;
     ArrayList<Student> students;
     CustomAdapter adapter;
+    Button add;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 students.add(new Student(document.getData()));
                             }
-                            search.setAdapter(new ArrayAdapter<String>(MainActivity.this,android.R.layout.select_dialog_item,getNames(DatabaseService.getStudents())));
+                            search.setAdapter(new ArrayAdapter<String>(MainActivity.this,android.R.layout.select_dialog_item,getNames(students)));
                             search.setThreshold(1);
                         } else {
                             System.out.println("Error getting documents."+ task.getException());
@@ -68,10 +73,41 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        add = findViewById(R.id.add_student);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AddUser.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
+   @Override
+    protected void onResume() {
+        super.onResume();
+       DatabaseService.db.collection("users")
+               .get()
+               .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                   @Override
+                   public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                       if (task.isSuccessful()) {
+                           for (QueryDocumentSnapshot document : task.getResult()) {
+                               students.add(new Student(document.getData()));
+                           }
+                           search.setAdapter(new ArrayAdapter<String>(MainActivity.this,android.R.layout.select_dialog_item,getNames(students)));
+                           search.setThreshold(1);
+                       } else {
+                           System.out.println("Error getting documents."+ task.getException());
+                       }
+                   }
+               });
+//        DatabaseService.getData();
+       System.out.println("done");
+//        search.setAdapter(new ArrayAdapter<String>(MainActivity.this,android.R.layout.select_dialog_item,getNames(DatabaseService.students)));
+
+    }
 
     Float [] getNotes(Student s){
         return new Float[] {s.python, s.java, s.flutter,s.angular,s.database};
